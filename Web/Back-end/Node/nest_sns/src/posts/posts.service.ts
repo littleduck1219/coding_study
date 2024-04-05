@@ -21,12 +21,17 @@ export class PostsService {
 
   // 모든 Post 조회
   async getAllPosts() {
-    return this.postsRepository.find();
+    return this.postsRepository.find({
+      relations: ['author'],
+    });
   }
 
   // Post ID로 조회
   async getPostById(id: number) {
-    const post = await this.postsRepository.findOne({ where: { id } });
+    const post = await this.postsRepository.findOne({
+      where: { id },
+      relations: ['author'],
+    });
 
     if (!post) {
       throw new NotFoundException();
@@ -40,12 +45,14 @@ export class PostsService {
   }
 
   // Post 생성
-  async createPost(author: string, title: string, content: string) {
+  async createPost(authorId: number, title: string, content: string) {
     //create : 저장할 객체 생성
     // save : 객체를 저장한다. create 메서드에서 생성한 객체를.
 
     const post = this.postsRepository.create({
-      author,
+      author: {
+        id: authorId,
+      },
       title,
       content,
       likeCount: 0,
@@ -69,22 +76,13 @@ export class PostsService {
   }
 
   // Post 수정
-  async updatePost(
-    postId: number,
-    author: string,
-    title: string,
-    content: string,
-  ) {
+  async updatePost(postId: number, title: string, content: string) {
     const post = await this.postsRepository.findOne({ where: { id: postId } });
 
     // const post = posts.find((post) => post.id === +postId);
 
     if (!post) {
       throw new NotFoundException();
-    }
-
-    if (author) {
-      post.author = author;
     }
 
     if (title) {

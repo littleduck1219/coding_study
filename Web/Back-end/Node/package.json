@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@nestjs/mapped-types": "*"
+  },
+  "devDependencies": {
+    "@types/mime": "^4.0.0"
+  }
+}
