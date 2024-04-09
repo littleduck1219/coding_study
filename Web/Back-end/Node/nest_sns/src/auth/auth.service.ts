@@ -44,7 +44,7 @@ export class AuthService {
     const prefix = isBearer ? 'Bearer' : 'Basic';
 
     if (splitToken.length !== 2 || splitToken[0] !== prefix) {
-      throw new UnauthorizedException('잘못된 토큰 입니다.');
+      throw new UnauthorizedException('잘못된 토큰입니다!');
     }
 
     const token = splitToken[1];
@@ -88,12 +88,13 @@ export class AuthService {
 
     /**
      * sub: id
-     * email: email
+     * email: email,
      * type: 'access' | 'refresh'
      */
-
     if (decoded.type !== 'refresh') {
-      throw new UnauthorizedException('리프레시 토큰이 아닙니다.');
+      throw new UnauthorizedException(
+        '토큰 재발급은 Refresh 토큰으로만 가능합니다!',
+      );
     }
 
     return this.signToken(
@@ -145,7 +146,8 @@ export class AuthService {
 
     return this.jwtService.sign(payload, {
       secret: JWT_SECRET,
-      expiresIn: isRefreshToken ? '3600' : '300',
+      // seconds
+      expiresIn: isRefreshToken ? 3600 : 300,
     });
   }
 

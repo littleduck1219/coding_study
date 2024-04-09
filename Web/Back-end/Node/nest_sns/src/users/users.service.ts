@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersModel } from './entities/users.entity';
 import { Repository } from 'typeorm';
@@ -20,7 +20,7 @@ export class UsersService {
     });
 
     if (nicknameExists) {
-      throw new Error('이미 존재하는 닉네임입니다.');
+      throw new BadRequestException('이미 존재하는 닉네임입니다.');
     }
 
     // 2) email 중복 확인
@@ -31,7 +31,7 @@ export class UsersService {
     });
 
     if (emailExists) {
-      throw new Error('이미 존재하는 이메일입니다.');
+      throw new BadRequestException('이미 존재하는 이메일입니다.');
     }
 
     const userObject = this.usersRepository.create({
