@@ -15,6 +15,7 @@ import { UsersModule } from 'src/users/users.module';
 import { User } from 'src/users/decorator/user.decorator';
 import { UsersModel } from 'src/users/entities/users.entity';
 import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -37,12 +38,8 @@ export class PostsController {
   }
 
   @Patch(':id')
-  patchPost(
-    @Param('id') id: string,
-    @Body('title') title?: string,
-    @Body('content') content?: string,
-  ) {
-    return this.postsService.updatePost(+id, title, content);
+  patchPost(@Param('id') id: string, @Body() body: UpdatePostDto) {
+    return this.postsService.updatePost(+id, body);
   }
 
   @Delete(':id')
