@@ -19,7 +19,7 @@ import * as Validation from 'src/common/validation-message';
 import { Exclude, Expose } from 'class-transformer';
 
 @Entity()
-@Exclude()
+// @Exclude()
 export class UsersModel extends BaseModel {
   @Column({
     length: 20,
