@@ -29,6 +29,16 @@ export class PostsService {
     });
   }
 
+  //
+  async generatePosts(userId) {
+    for (let i = 0; i < 100; i++) {
+      await this.createPost(userId, {
+        title: `임의로 생성된 포스트 ${i}`,
+        content: `임의로 생성된 포스트 ${i}의 내용`,
+      });
+    }
+  }
+
   // 오름차순으로 정렬하는 pagination 구현
   async paginatePosts(dto: PaginatePostDto) {
     const posts = await this.postsRepository.find({

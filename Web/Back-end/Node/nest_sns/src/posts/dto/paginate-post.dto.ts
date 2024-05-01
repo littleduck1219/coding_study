@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsNumber, IsOptional, IsIn } from 'class-validator';
 
 export class PaginatePostDto {
