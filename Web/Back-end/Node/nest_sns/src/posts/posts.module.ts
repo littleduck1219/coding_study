@@ -8,12 +8,7 @@ import { UsersModule } from 'src/users/users.module';
 import { CommonModule } from 'src/common/common.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([PostsModel]),
-    AuthModule,
-    UsersModule,
-    CommonModule,
-  ],
+  imports: [TypeOrmModule.forFeature([PostsModel]), AuthModule, UsersModule],
   controllers: [PostsController],
   providers: [PostsService],
 })
