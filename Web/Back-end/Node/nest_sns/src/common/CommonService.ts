@@ -7,9 +7,7 @@ import {
   Repository,
 } from 'typeorm';
 import { BaseModel } from './entity/base.entity';
-import { KeyObject } from 'crypto';
 import { FILTER_MAPPER } from './const/filter-mapper';
-import { find } from 'rxjs';
 import { HOST, PROTOCOL } from './const/env.const';
 
 @Injectable()
@@ -82,12 +80,6 @@ export class CommonService {
 
       nextUrl.searchParams.append(key, lastItem.id.toString());
     }
-    return {
-      data: results,
-      cursor: { after: lastItem?.id ?? null },
-      count: results.length,
-      next: nextUrl?.toString() ?? null,
-    };
   }
 
   private composeFindOptions<T extends BaseModel>(
@@ -146,7 +138,6 @@ export class CommonService {
      * 예를 들어 where__id__more_than
      * __를 기준으로 나눴을 때
      */
-
     const split = key.split('__');
 
     if (split.length !== 2 && split.length !== 3) {
@@ -162,7 +153,6 @@ export class CommonService {
        * filed => 'id'
        * value => 3
        */
-
       options[field] = value;
     } else {
       /** 길이가 3일 경우 Typeorm 유틸리티 적용이 필요함.
@@ -175,14 +165,12 @@ export class CommonService {
        * filed 값에 FILETER_MAPPER에서 해당되는 utility를 가져온 후
        * 값에 적용 해준다.
        */
-
       // ['where', 'id', 'more_than']
       const [_, field, operator] = split;
 
       // where__id__between = 3, 4
       // 만약 split 대상 문자가 존재하지 않으면 길이가 무조건 1이다.
       //   const values = value.toString().split(',');
-
       //field -> id
       //operator -> more_than
       // FILTER_MAPPER[more_than] => MoreThan
@@ -196,26 +184,4 @@ export class CommonService {
 
     return options;
   }
-
-  //   private parseOrderFilter<T extends BaseModel>(
-  //     key: string,
-  //     value: any,
-  //   ): FindOptionsOrder<T> {
-  //     const order: FindOptionsOrder<T> = {};
-  //     /**
-  //      * order는 무조건 두개로 스플릿 된다.
-  //      */
-  //     const split = key.split('__');
-
-  //     if (split.length !== 2) {
-  //       throw new BadRequestException(
-  //         `order 필터는 '__'를 split 했을때 길이가 2이어야 합니다. - 문제되는 키값: ${key}`,
-  //       );
-  //     }
-  //     const [_, field] = split;
-
-  //     order[field] = value;
-
-  //     return order;
-  //   }
 }
