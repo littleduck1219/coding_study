@@ -7,9 +7,7 @@ import {
   Repository,
 } from 'typeorm';
 import { BaseModel } from './entity/base.entity';
-import { KeyObject } from 'crypto';
 import { FILTER_MAPPER } from './const/filter-mapper';
-import { find } from 'rxjs';
 import { HOST, PROTOCOL } from './const/env.const';
 
 @Injectable()
@@ -31,7 +29,15 @@ export class CommonService {
     dto: BasePaginationDto,
     repository: Repository<T>,
     overrideFindOptions: FindManyOptions<T> = {},
-  ) {}
+  ) {
+    const findOptions = this.composeFindOptions<T>(dto);
+    const [data, count] = await repository.findAndCount({
+      ...findOptions,
+      ...overrideFindOptions,
+    });
+
+    return { data, total: count };
+  }
 
   private async cursorPaginate<T extends BaseModel>(
     dto: BasePaginationDto,
@@ -122,10 +128,10 @@ export class CommonService {
       if (key.startsWith('where__')) {
         where = {
           ...where,
-          ...this.parseWhereFilter<T>(key, value),
+          ...this.parseWhereFilter(key, value),
         };
       } else if (key.startsWith('order__')) {
-        order = { ...order, ...this.parseWhereFilter<T>(key, value) };
+        order = { ...order, ...this.parseWhereFilter(key, value) };
       }
     }
     return {
@@ -203,7 +209,7 @@ export class CommonService {
   //   ): FindOptionsOrder<T> {
   //     const order: FindOptionsOrder<T> = {};
   //     /**
-  //      * order는 무조건 두개로 스플릿 된다.
+  //      * order는 무조건ㅕ 두개로 스플릿 된다.
   //      */
   //     const split = key.split('__');
 
