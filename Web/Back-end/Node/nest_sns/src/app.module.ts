@@ -9,9 +9,12 @@ import { UsersModel } from './users/entities/users.entity';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { IgdbModule } from './igdb/igdb.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
+    HttpModule,
     PostsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -26,6 +29,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     UsersModule,
     AuthModule,
     CommonModule,
+    IgdbModule,
   ],
   controllers: [AppController],
   providers: [

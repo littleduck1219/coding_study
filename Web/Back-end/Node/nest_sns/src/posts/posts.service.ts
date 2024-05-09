@@ -6,7 +6,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PaginatePostDto } from './dto/paginate-post.dto';
 import { HOST, PROTOCOL } from 'src/common/const/env.const';
-import { CommonService } from 'src/common/CommonService';
+import { CommonService } from 'src/common/common.service';
 
 export interface PostModel {
   id: number;
