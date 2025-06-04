@@ -14,12 +14,18 @@ public class ClassStart4 {
         student2.age = 15;
         student2.grade = 90;
 
-        Student[] students = new Student[2];
-        students[0] = student1;
-        students[1] = student2;
+        Student[] students = new Student[] { student1, student2 };
 
         for (int i = 0; i < students.length; i++) {
             System.out.println("이름: " + students[i].name + "나이: " + students[i].age + "점수: " + students[i].grade);
+        }
+
+        for (int i = 0; i < students.length; i++) {
+            Student s = students[i];
+        }
+
+        for (Student s : students) {
+            System.out.println(s);
         }
     }
 }
