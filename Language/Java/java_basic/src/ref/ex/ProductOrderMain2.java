@@ -5,22 +5,35 @@ import java.util.Scanner;
 public class ProductOrderMain2 {
 
     public static void main(String[] args) {
-        ProductOrder[] orders = new ProductOrder[3];
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("입력할 주문 개수");
+        int n = scanner.nextInt();
+        scanner.nextLine();
 
-        orders[0] = createOrder("두부", 2000, 2);
-        orders[1] = createOrder("김치", 5000, 1);
-        orders[2] = createOrder("콜라", 1500, 2);
+        ProductOrder[] orders = new ProductOrder[n];
 
+        for (int i = 0; i < orders.length; i++) {
+            System.out.println((i + 1) + "번째 주문 정보를 입력하세요");
+
+            System.out.println("상품명: ");
+            String productName = scanner.nextLine();
+
+            System.out.println("가격: ");
+            int price = scanner.nextInt();
+
+            System.out.println("수량: ");
+            int quantity = scanner.nextInt();
+
+            scanner.nextLine();
+
+            orders[i] = createOrder(productName, price, quantity);
+        }
         printOrders(orders);
         int totalAmount = getTotalAmount(orders);
-        System.out.println("총 결제 금액: " + totalAmount);
-
+        System.out.println("총 결제 금액: " +  totalAmount);
     }
 
     static ProductOrder createOrder(String productName, int price, int quantity) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("입력할 주문 개수");
-
         ProductOrder order = new ProductOrder();
         order.productName = productName;
         order.price = price;
