@@ -12,6 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MemoryMemberRepositoryTest {
     MemoryMemberRepository repository = new MemoryMemberRepository();
 
+    public void afterEach() {
+    repository.clearStore();
+    }
+
 
     @Test
     public void save() {
