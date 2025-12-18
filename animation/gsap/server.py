@@ -130,10 +130,35 @@ def create_index_html():
             details.course > summary {{ cursor: pointer; font-size: 18px; }}
             ul.lessons {{ list-style-type: none; padding-left: 18px; margin: 8px 0 0; }}
             ul.lessons li {{ margin: 6px 0; }}
+            .demoViewer {{ display: none; margin: 16px 0 22px; }}
+            .demoBar {{ display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }}
+            .demoBtn {{
+                border: 1px solid #ddd;
+                background: #fff;
+                border-radius: 8px;
+                padding: 8px 10px;
+                cursor: pointer;
+            }}
+            .demoFrame {{
+                width: 100%;
+                height: 560px;
+                border: 1px solid #e5e7eb;
+                border-radius: 10px;
+                background: #fff;
+            }}
         </style>
     </head>
     <body>
         <h1>📂 강의 목록</h1>
+
+        <section id="demo-viewer" class="demoViewer">
+            <div class="demoBar">
+                <button id="demo-close" class="demoBtn" type="button">목차로</button>
+                <a id="demo-open" href="#" target="_blank" rel="noopener">새 탭으로 열기</a>
+                <span id="demo-path" class="muted"></span>
+            </div>
+            <iframe id="demo-frame" class="demoFrame"></iframe>
+        </section>
 
         <h2>HTML 예제</h2>
         {''.join(html_courses_html) if html_courses_html else '<p class="muted">html/ 아래에 index.html 예제가 없습니다.</p>'}
@@ -150,6 +175,17 @@ def create_index_html():
         <p style="color: #999; font-size: 12px; margin-top: 30px;">
             * 이 목록은 server.py에 의해 자동으로 업데이트됩니다.
         </p>
+
+        <script type="module">
+            import navigate from "/navigate.js";
+            navigate.initDemoRouter({{
+                iframeId: "demo-frame",
+                viewerId: "demo-viewer",
+                closeId: "demo-close",
+                openId: "demo-open",
+                pathId: "demo-path",
+            }});
+        </script>
     </body>
     </html>
     """
