@@ -11,6 +11,8 @@ def create_index_html():
 
     # 섹션별 목록 (HTML 코스 -> 회차/하위 예제)
     html_courses = {}
+    # React 예제 목록 (react/src/examples 기준)
+    react_courses = {}
 
     # 모든 하위 폴더를 탐색 (os.walk)
     for dirpath, dirnames, filenames in os.walk(root_dir):
@@ -41,6 +43,26 @@ def create_index_html():
 
             html_courses.setdefault(course, []).append((lesson, rel_path))
 
+    # React 예제 스캔: react/src/examples/**.(jsx|tsx)
+    react_examples_root = os.path.join(root_dir, "react", "src", "examples")
+    if os.path.isdir(react_examples_root):
+        for dirpath, dirnames, filenames in os.walk(react_examples_root):
+            for filename in filenames:
+                if not (filename.endswith(".jsx") or filename.endswith(".tsx")):
+                    continue
+                if filename.startswith("_"):
+                    continue
+
+                rel = os.path.relpath(os.path.join(dirpath, filename), react_examples_root).replace("\\", "/")
+                parts = [p for p in rel.split("/") if p]
+                if len(parts) < 2:
+                    # course/file.jsx 형태가 아니면 스킵
+                    continue
+
+                course = parts[0]
+                lesson = "/".join(parts[1:]).replace(".jsx", "").replace(".tsx", "")
+                react_courses.setdefault(course, []).append(lesson)
+
     # HTML 내용 조립 (정렬해서 보기 좋게)
     def _lesson_sort_key(item):
         lesson, _path = item
@@ -57,6 +79,28 @@ def create_index_html():
             [f'<li><a href="/{p}/">{l}</a></li>' for (l, p) in lessons]
         )
         html_courses_html.append(
+            f"""
+            <details class="course">
+                <summary>{course}</summary>
+                <ul class="lessons">
+                    {lesson_items}
+                </ul>
+            </details>
+            """
+        )
+
+    react_course_names = sorted(react_courses.keys())
+    react_courses_html = []
+    for course in react_course_names:
+        lessons = sorted(set(react_courses[course]))
+        lesson_items = "\n".join(
+            [
+                # Vite dev server에서 해시로 예제 선택
+                f'<li><a href="http://localhost:5173/#{course}/{l}">{l}</a></li>'
+                for l in lessons
+            ]
+        )
+        react_courses_html.append(
             f"""
             <details class="course">
                 <summary>{course}</summary>
@@ -99,6 +143,7 @@ def create_index_html():
             React 예제는 Vite 개발 서버로 실행합니다:
             <code>cd react</code> <code>npm i</code> <code>npm run dev</code>
         </p>
+        {''.join(react_courses_html) if react_courses_html else '<p class="muted">react/src/examples 아래에 예제(.jsx/.tsx)가 없습니다.</p>'}
         <ul>
             <li><a href="/react/README.md">react/README.md</a></li>
         </ul>

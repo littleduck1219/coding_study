@@ -24,6 +24,42 @@ body {
   opacity: 0.85;
 }
 
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.navItem {
+  color: #e8ecff;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.navItem:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 16px 0;
+}
+
+.muted {
+  opacity: 0.75;
+}
+
+.exTitle {
+  margin: 0 0 12px;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
 .stage {
   height: 220px;
   border: 1px solid rgba(255, 255, 255, 0.15);
