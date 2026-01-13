@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <svg class="demo" viewBox="0 0 500 500" width="500" height="500">
+            <line class="line-x1" x1="100" y1="0" x2="100" y2="500" stroke="black" />
+            <line class="line-x2" x1="200" y1="0" x2="200" y2="500" stroke="black" />
+            <line class="line-x3" x1="300" y1="0" x2="300" y2="500" stroke="black" />
+            <line class="line-x4" x1="400" y1="0" x2="400" y2="500" stroke="black" />
+
+            <line class="line-y1" x1="0" y1="100" x2="500" y2="100" stroke="black" />
+            <line class="line-y2" x1="0" y1="200" x2="500" y2="200" stroke="black" />
+            <line class="line-y3" x1="0" y1="300" x2="500" y2="300" stroke="black" />
+            <line class="line-y4" x1="0" y1="400" x2="500" y2="400" stroke="black" />
+
+            <rect
+                class="box"
+                x="200"
+                y="100"
+                width="100"
+                height="100"
+                fill="red"
+                fill-opacity="0.5"
+                stroke="black"
+                stroke-width="1" />
+
+            <circle cx="250" cy="250" r="5" fill="blue" />
+        </svg>
+
+        <!-- GSAP (CDN) -->
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/GSDevTools.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/MorphSVGPlugin.min.js"></script>
+        <!-- Demo script -->
+        <script src="script.js"></script>
+    </body>
+</html>
